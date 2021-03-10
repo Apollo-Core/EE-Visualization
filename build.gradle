@@ -1,13 +1,13 @@
 buildscript {
-	repositories {
-		jcenter()
-	}
+  repositories {
+    jcenter()
+  }
 }
 
 // to run sonarqube in local host
 plugins {
-	id "org.sonarqube" version "2.7"
-  }
+  id "org.sonarqube" version "2.7"
+}
 
 apply plugin: 'java'
 apply plugin: 'application'
@@ -16,39 +16,46 @@ apply plugin: 'maven'
 apply plugin: 'jacoco'
 // for compliance with higher Java versions
 jacoco {
-		toolVersion = "0.8.5"
-	}
+  toolVersion = "0.8.5"
+}
 
 group 'Apollo-Core-EE-Visualization'
 version '1.0-SNAPSHOT'
 
 
 repositories {
-	mavenCentral()
-	maven {
-		name "jitpack"
-		url 'https://jitpack.io' }
+  mavenCentral()
+  maven {
+    name "jitpack"
+    url 'https://jitpack.io' }
 }
 
 dependencies {
-	// dependencies to other components of Apollo-Core EE
-	implementation 'com.github.Apollo-Core:EE-Core:master-SNAPSHOT'
-	implementation 'com.github.Apollo-Core:EE-Guice:main-SNAPSHOT'
-	implementation 'com.github.Apollo-Core:EE-Model:main-SNAPSHOT'
-	implementation 'com.github.Apollo-Core:EE-Control:master-SNAPSHOT'
-	
-	// dependency to Opt4J
-	implementation 'com.github.FedorSmirnov89:opt4j:-SNAPSHOT'
-	// dependency to opendse
-	implementation 'com.github.FedorSmirnov89:opendse:-SNAPSHOT'
-	
-	implementation 'com.google.code.gson:gson:2.8.6'
-	
-	// test dependencies	
-	testCompile group: 'junit', 		name: 'junit', 					version: '4.+'
-	testCompile group: 'org.mockito',     name: 'mockito-core',     version: '3.4.4'
-	// dependency to local files
-	// compile files('libs/lib.jar')
+  // dependencies to other components of Apollo-Core EE
+  if (project.hasProperty("local")) {
+    implementation project (':EE-Core')
+    implementation project (':EE-Guice')
+    implementation project (':EE-Model')
+    implementation project (':EE-Control')
+  }else {
+    implementation 'com.github.Apollo-Core:EE-Core:master-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Guice:main-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Model:main-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Control:master-SNAPSHOT'
+  }
+
+  // dependency to Opt4J
+  implementation 'com.github.FedorSmirnov89:opt4j:-SNAPSHOT'
+  // dependency to opendse
+  implementation 'com.github.FedorSmirnov89:opendse:-SNAPSHOT'
+
+  implementation 'com.google.code.gson:gson:2.8.6'
+
+  // test dependencies
+  testCompile group: 'junit', 		name: 'junit', 					version: '4.+'
+  testCompile group: 'org.mockito',     name: 'mockito-core',     version: '3.4.4'
+  // dependency to local files
+  // compile files('libs/lib.jar')
 }
 
 
