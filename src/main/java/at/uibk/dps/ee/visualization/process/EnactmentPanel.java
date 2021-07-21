@@ -5,7 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.UIManager;
-import at.uibk.dps.ee.control.graph.GraphAccess;
+import at.uibk.dps.ee.model.graph.EnactmentGraphProvider;
 import at.uibk.dps.ee.model.graph.EnactmentSpecification;
 import net.sf.opendse.model.Mappings;
 import net.sf.opendse.model.Resource;
@@ -26,9 +26,9 @@ public class EnactmentPanel extends JPanel {
   private static final long serialVersionUID = 1L;
 
   protected final EnactmentSpecification actualSpec;
-  protected final GraphAccess graphAccess;
+  protected final EnactmentGraphProvider eGraphProvider;
 
-  public EnactmentPanel(EnactmentSpecification specification, GraphAccess graphAccess) {
+  public EnactmentPanel(EnactmentSpecification specification, EnactmentGraphProvider eGraphProvider) {
 
     try {
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -36,7 +36,7 @@ public class EnactmentPanel extends JPanel {
       e.printStackTrace();
     }
     this.actualSpec = specification;
-    this.graphAccess = graphAccess;
+    this.eGraphProvider = eGraphProvider;
     updateSpecification();
   }
 
@@ -47,7 +47,7 @@ public class EnactmentPanel extends JPanel {
     ElementSelection selection = new ElementSelection();
 
     GraphPanel panelEnactmentGraph =
-        new GraphPanel(new GraphPanelEnactment(actualSpec, selection, graphAccess), selection);
+        new GraphPanel(new GraphPanelEnactment(actualSpec, selection, eGraphProvider), selection);
     GraphPanel panelResourceGraph =
         new GraphPanel(new GraphPanelResources(actualSpec, selection), selection);
     MappingPanel mappingPanel = new MappingPanel(mappings, selection);

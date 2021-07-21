@@ -19,7 +19,7 @@ import com.google.inject.Singleton;
 
 import at.uibk.dps.ee.visualization.constants.ConstantsVisulization;
 import at.uibk.dps.ee.core.ModelModificationListener;
-import at.uibk.dps.ee.core.enactable.EnactmentStateListener;
+import at.uibk.dps.ee.core.function.EnactmentStateListener;
 
 /**
  * The {@link EnactmentProcessViewer} is used to visualize the enactment

@@ -37,11 +37,12 @@ dependencies {
     implementation project (':EE-Guice')
     implementation project (':EE-Model')
     implementation project (':EE-Control')
+    implementation project (':EE-Docker')
   }else {
-    implementation 'com.github.Apollo-Core:EE-Core:master-SNAPSHOT'
-    implementation 'com.github.Apollo-Core:EE-Guice:main-SNAPSHOT'
-    implementation 'com.github.Apollo-Core:EE-Model:main-SNAPSHOT'
-    implementation 'com.github.Apollo-Core:EE-Control:master-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Core:vertx-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Guice:vertex-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Model:vertex-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Control:vertex-SNAPSHOT'
   }
 
   // dependency to Opt4J
@@ -49,6 +50,9 @@ dependencies {
   // dependency to opendse
   implementation 'com.github.FedorSmirnov89:opendse:-SNAPSHOT'
 
+  // VertX
+  implementation 'io.vertx:vertx-core:4.1.0'
+  
   implementation 'com.google.code.gson:gson:2.8.6'
 
   // test dependencies

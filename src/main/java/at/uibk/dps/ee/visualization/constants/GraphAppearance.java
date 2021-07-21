@@ -1,8 +1,6 @@
 package at.uibk.dps.ee.visualization.constants;
 
 import java.awt.Color;
-
-import at.uibk.dps.ee.core.enactable.Enactable.State;
 import at.uibk.dps.ee.model.properties.PropertyServiceData;
 import at.uibk.dps.ee.model.properties.PropertyServiceData.NodeType;
 import at.uibk.dps.ee.model.properties.PropertyServiceFunction;
@@ -74,11 +72,11 @@ public final class GraphAppearance {
   public static Color getResourceColor(Resource res) {
     if (PropertyServiceResource.getUsingTaskIds(res).isEmpty()) {
       return colorResIdle;
-    }else {
+    } else {
       return colorResRunning;
     }
   }
-  
+
   /**
    * Returns the shape enum for the given node.
    * 
@@ -94,7 +92,7 @@ public final class GraphAppearance {
       throw new IllegalArgumentException("Unknown type of node: " + node.getId());
     }
   }
-  
+
 
   /**
    * Returns the color for the given node when draws as model visualization.
@@ -150,26 +148,42 @@ public final class GraphAppearance {
       if (PropertyServiceFunction.getUsageType(taskNode).equals(UsageType.Utility)) {
         return colorFunctionUtility;
       }
-      State state = PropertyServiceFunction.getEnactable(taskNode).getState();
-      switch (state) {
-        case WAITING:
-          return colorFunctionWaiting;
-        case RUNNING:
-          return colorFunctionRunning;
-        case SCHEDULABLE:
-          return colorFunctionReady;
-        case LAUNCHABLE:
-          return colorFunctionReady; // TODO give it a different color
-        case FINISHED:
-          return colorFunctionFinished;
-        case STOPPED:
-          return colorFunctionError;
-        default:
-          throw new IllegalStateException("Unexpected enactable state " + state.name());
+      if (isTaskFinished(taskNode)) {
+        return colorFunctionFinished;
+      } else if (isTaskReady(taskNode)){
+        return colorFunctionReady;
+      }else {
+        return colorFunctionWaiting;
       }
+      // State state = PropertyServiceFunction.getEnactable(taskNode).getState();
+      // switch (state) {
+      // case WAITING:
+      // return colorFunctionWaiting;
+      // case RUNNING:
+      // return colorFunctionRunning;
+      // case SCHEDULABLE:
+      // return colorFunctionReady;
+      // case LAUNCHABLE:
+      // return colorFunctionReady; // TODO give it a different color
+      // case FINISHED:
+      // return colorFunctionFinished;
+      // case STOPPED:
+      // return colorFunctionError;
+      // default:
+      // throw new IllegalStateException("Unexpected enactable state " +
+      // state.name());
+      // }
     } else {
       throw new IllegalArgumentException("Unknown type of node: " + node.getId());
     }
+  }
+
+  protected static boolean isTaskReady(Task task) {
+    return PropertyServiceFunction.isInputSet(task);
+  }
+  
+  protected static boolean isTaskFinished(Task task) {
+    return PropertyServiceFunction.isOutputSet(task);
   }
 
   /**

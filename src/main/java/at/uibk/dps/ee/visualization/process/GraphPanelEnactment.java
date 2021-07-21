@@ -2,8 +2,8 @@ package at.uibk.dps.ee.visualization.process;
 
 import java.awt.Color;
 import java.awt.Shape;
-import at.uibk.dps.ee.control.graph.GraphAccess;
 import at.uibk.dps.ee.model.graph.EnactmentGraph;
+import at.uibk.dps.ee.model.graph.EnactmentGraphProvider;
 import at.uibk.dps.ee.model.graph.EnactmentSpecification;
 import at.uibk.dps.ee.visualization.constants.GraphAppearance;
 import at.uibk.dps.ee.visualization.constants.GraphAppearance.EGNodeShape;
@@ -40,22 +40,22 @@ public class GraphPanelEnactment extends AbstractGraphPanelFormat {
   protected final Routings<Task, Resource, Link> routings;
   protected final EnactmentSpecification spec;
   protected final ElementSelection selection;
-  protected final GraphAccess graphAccess;
+  protected final EnactmentGraph eGraph;
 
-  public GraphPanelEnactment(EnactmentSpecification spec, ElementSelection selection, GraphAccess graphAccess) {
+  public GraphPanelEnactment(EnactmentSpecification spec, ElementSelection selection, EnactmentGraphProvider eGraphProvider) {
     this.selection = selection;
     this.spec = spec;
     this.enactmentGraph = spec.getEnactmentGraph();
     this.typeMappings = spec.getMappings();
     this.routings = spec.getRoutings();
-    this.graphAccess = graphAccess;
+    this.eGraph = eGraphProvider.getEnactmentGraph();
   }
 
 
   @SuppressWarnings("unchecked")
   @Override
   public Graph<Node, Edge> getGraph() {
-    Graph<?, ?> result = graphAccess.getGraphCopy();
+    Graph<?, ?> result = eGraph;
     return (Graph<Node, Edge>) result;
   }
 

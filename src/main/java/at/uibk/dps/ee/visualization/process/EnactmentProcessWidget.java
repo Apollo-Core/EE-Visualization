@@ -6,7 +6,7 @@ import org.opt4j.viewer.Viewport;
 import org.opt4j.viewer.Widget;
 
 import com.google.inject.Inject;
-import at.uibk.dps.ee.control.graph.GraphAccess;
+import at.uibk.dps.ee.model.graph.EnactmentGraphProvider;
 import at.uibk.dps.ee.model.graph.SpecificationProvider;
 
 /**
@@ -20,8 +20,9 @@ public class EnactmentProcessWidget implements Widget {
   protected EnactmentPanel panel;
 
   @Inject
-  public EnactmentProcessWidget(SpecificationProvider specProvider, GraphAccess graphAccess) {
-    this.panel = new EnactmentPanel(specProvider.getSpecification(), graphAccess);
+  public EnactmentProcessWidget(SpecificationProvider specProvider,
+      EnactmentGraphProvider eGraphProvider) {
+    this.panel = new EnactmentPanel(specProvider.getSpecification(), eGraphProvider);
   }
 
   @Override
