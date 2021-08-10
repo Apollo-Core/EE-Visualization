@@ -41,7 +41,7 @@ dependencies {
     implementation 'com.github.Apollo-Core:EE-Core:preVertX'
     implementation 'com.github.Apollo-Core:EE-Guice:preVertX'
     implementation 'com.github.Apollo-Core:EE-Model:prevertx'
-    implementation 'com.github.Apollo-Core:EE-Control:preVertX'
+    implementation 'com.github.Apollo-Core:EE-Control:prevertx'
   }
 
   // dependency to Opt4J
