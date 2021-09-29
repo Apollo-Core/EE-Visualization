@@ -7,6 +7,7 @@ import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 import at.uibk.dps.ee.model.graph.EnactmentGraphProvider;
 import at.uibk.dps.ee.model.graph.EnactmentSpecification;
+import at.uibk.dps.ee.model.persistance.MappingsTransformer;
 import net.sf.opendse.model.Mappings;
 import net.sf.opendse.model.Resource;
 import net.sf.opendse.model.Task;
@@ -28,7 +29,8 @@ public class EnactmentPanel extends JPanel {
   protected final EnactmentSpecification actualSpec;
   protected final EnactmentGraphProvider eGraphProvider;
 
-  public EnactmentPanel(EnactmentSpecification specification, EnactmentGraphProvider eGraphProvider) {
+  public EnactmentPanel(EnactmentSpecification specification,
+      EnactmentGraphProvider eGraphProvider) {
 
     try {
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -43,7 +45,7 @@ public class EnactmentPanel extends JPanel {
   protected void updateSpecification() {
     this.removeAll();
 
-    Mappings<Task, Resource> mappings = actualSpec.getMappings();
+    Mappings<Task, Resource> mappings = MappingsTransformer.toOdse(actualSpec.getMappings());
     ElementSelection selection = new ElementSelection();
 
     GraphPanel panelEnactmentGraph =

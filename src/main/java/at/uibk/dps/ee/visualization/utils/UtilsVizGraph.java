@@ -3,6 +3,7 @@ package at.uibk.dps.ee.visualization.utils;
 import at.uibk.dps.ee.model.graph.EnactmentGraph;
 import at.uibk.dps.ee.model.graph.ResourceGraph;
 import edu.uci.ics.jung.graph.util.EdgeType;
+import net.sf.opendse.model.Architecture;
 import net.sf.opendse.model.Communication;
 import net.sf.opendse.model.Dependency;
 import net.sf.opendse.model.Element;
@@ -54,7 +55,7 @@ public final class UtilsVizGraph {
    * @param original the original graph
    * @return an resource graph which is used for the visualization
    */
-  public static ResourceGraph generateResGraphToDraw(final ResourceGraph resGraph) {
+  public static ResourceGraph generateResGraphToDraw(final Architecture<Resource, Link> resGraph) {
     ResourceGraph result = new ResourceGraph();
     for (Resource res : resGraph) {
       result.addVertex((Resource) copy(res));

@@ -7,6 +7,7 @@ import java.awt.geom.Point2D;
 import java.util.Random;
 import at.uibk.dps.ee.model.graph.EnactmentSpecification;
 import at.uibk.dps.ee.model.graph.ResourceGraph;
+import at.uibk.dps.ee.model.persistance.EnactmentSpecTransformer;
 import at.uibk.dps.ee.visualization.constants.GraphAppearance;
 import at.uibk.dps.ee.visualization.utils.UtilsVizGraph;
 import edu.uci.ics.jung.algorithms.layout.FRLayout;
@@ -23,6 +24,7 @@ import net.sf.opendse.model.Mappings;
 import net.sf.opendse.model.Node;
 import net.sf.opendse.model.Resource;
 import net.sf.opendse.model.Routings;
+import net.sf.opendse.model.Specification;
 import net.sf.opendse.model.Task;
 import net.sf.opendse.visualization.AbstractGraphPanelFormat;
 import net.sf.opendse.visualization.ElementSelection;
@@ -39,16 +41,16 @@ import com.google.common.base.Function;
  */
 public class GraphPanelResources extends AbstractGraphPanelFormat {
 
-  protected final EnactmentSpecification spec;
-  protected final ResourceGraph resGraph;
+  protected final Specification spec;
+  protected final Architecture<Resource, Link> resGraph;
   protected final Mappings<Task, Resource> mappings;
   protected final Routings<Task, Resource, Link> routings;
   protected final ElementSelection selection;
 
-  public GraphPanelResources(EnactmentSpecification spec, ElementSelection selection) {
+  public GraphPanelResources(EnactmentSpecification apolloSpec, ElementSelection selection) {
     this.selection = selection;
-    this.spec = spec;
-    this.resGraph = spec.getResourceGraph();
+    this.spec = EnactmentSpecTransformer.toOdse(apolloSpec);
+    this.resGraph = spec.getArchitecture();
     this.mappings = spec.getMappings();
     this.routings = spec.getRoutings();
   }

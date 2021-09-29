@@ -5,11 +5,11 @@ import java.awt.Shape;
 import at.uibk.dps.ee.model.graph.EnactmentGraph;
 import at.uibk.dps.ee.model.graph.EnactmentGraphProvider;
 import at.uibk.dps.ee.model.graph.EnactmentSpecification;
+import at.uibk.dps.ee.model.persistance.EnactmentSpecTransformer;
 import at.uibk.dps.ee.visualization.constants.GraphAppearance;
 import at.uibk.dps.ee.visualization.constants.GraphAppearance.EGNodeShape;
 import edu.uci.ics.jung.algorithms.layout.Layout;
 import edu.uci.ics.jung.graph.DirectedGraph;
-import edu.uci.ics.jung.graph.util.Pair;
 import net.sf.opendse.model.Dependency;
 import net.sf.opendse.model.Edge;
 import net.sf.opendse.model.Graph;
@@ -19,6 +19,7 @@ import net.sf.opendse.model.Mappings;
 import net.sf.opendse.model.Node;
 import net.sf.opendse.model.Resource;
 import net.sf.opendse.model.Routings;
+import net.sf.opendse.model.Specification;
 import net.sf.opendse.model.Task;
 import net.sf.opendse.model.properties.TaskPropertyService;
 import net.sf.opendse.visualization.AbstractGraphPanelFormat;
@@ -38,14 +39,15 @@ public class GraphPanelEnactment extends AbstractGraphPanelFormat {
   protected final EnactmentGraph enactmentGraph;
   protected final Mappings<Task, Resource> typeMappings;
   protected final Routings<Task, Resource, Link> routings;
-  protected final EnactmentSpecification spec;
+  protected final Specification spec;
   protected final ElementSelection selection;
   protected final EnactmentGraph eGraph;
 
-  public GraphPanelEnactment(EnactmentSpecification spec, ElementSelection selection, EnactmentGraphProvider eGraphProvider) {
+  public GraphPanelEnactment(EnactmentSpecification apolloSpec, ElementSelection selection,
+      EnactmentGraphProvider eGraphProvider) {
     this.selection = selection;
-    this.spec = spec;
-    this.enactmentGraph = spec.getEnactmentGraph();
+    this.spec = EnactmentSpecTransformer.toOdse(apolloSpec);
+    this.enactmentGraph = apolloSpec.getEnactmentGraph();
     this.typeMappings = spec.getMappings();
     this.routings = spec.getRoutings();
     this.eGraph = eGraphProvider.getEnactmentGraph();
@@ -118,10 +120,10 @@ public class GraphPanelEnactment extends AbstractGraphPanelFormat {
   public boolean isActive(Edge edge, Node n0, Node n1) {
     if (enactmentGraph.containsEdge((Dependency) edge) && enactmentGraph.containsVertex((Task) n0)
         && enactmentGraph.containsVertex((Task) n1)) {
-      Pair<Task> endpoints = enactmentGraph.getEndpoints((Dependency) edge);
-      Task t0 = endpoints.getFirst();
-      Task t1 = endpoints.getSecond();
-      return isActive(t0) && isActive(t1);
+      Dependency dep = (Dependency) edge;
+      Task src = enactmentGraph.getSource(dep);
+      Task dst = enactmentGraph.getDest(dep);
+      return isActive(src) && isActive(dst);
     } else {
       return false;
     }
