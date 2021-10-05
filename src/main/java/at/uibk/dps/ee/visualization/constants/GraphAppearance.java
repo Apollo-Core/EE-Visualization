@@ -135,10 +135,10 @@ public final class GraphAppearance {
           }
         case Sequentiality:
           return Graphics.BLACK;
-        case WhileStart:
-          return Graphics.PURPLE;
-        case WhileCounter:
-          return Graphics.PURPLE;
+//        case WhileStart:
+//          return Graphics.PURPLE;
+//        case WhileCounter:
+//          return Graphics.PURPLE;
         default:
           throw new IllegalStateException(
               "No color known for data node of type " + nodeType.name());
