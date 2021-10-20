@@ -112,6 +112,8 @@ public class EnactmentProcessViewer implements EnactmentStateListener, ModelModi
   @Override
   public void reactToModelModification() {
     widget.update();
-    frame.repaint();
+    if (frame != null) {
+      frame.repaint();
+    }    
   }
 }
